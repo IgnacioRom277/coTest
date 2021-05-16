@@ -4,7 +4,7 @@ const coTest = require('../src/coTest');
 const CarInsurance = coTest.CarInsurance;
 const Product = coTest.Product;
 
-describe("Co Test", function() {
+describe("Products", function() {
 
   it("should foo", function() {
     const coTest = new CarInsurance([ new Product("foo", 0, 0) ]);
@@ -12,6 +12,32 @@ describe("Co Test", function() {
     expect(products[0].name).equal("foo");
   });
 
+  it("price should not be negative", function() {
+    const coTest = new CarInsurance([ new Product("Low Coverage", 4, -12) ]);
+    const products = coTest.updatePrice();
+    expect(products[0].price).equal(0);
+  });
+
+  it("price should have at least one element", function() {
+    const coTest = new CarInsurance([ new Product("Medium Coverage", 4, -12) ]);
+    const products = coTest.updatePrice();
+    expect(products).to.be.instanceof(Array);
+    expect(products).to.have.length.above(0);
+  });
+
+  it("should decrease price by one when sellIn is greater than 0", () => {
+    const coTest = new CarInsurance([ new Product("Medium Coverage", 5, 10)]);
+    const products = coTest.updatePrice();
+    expect(products[0].sellIn).equal(4);
+    expect(products[0].price).equal(9);
+  })
+
+  it("should decrease price by two when sellIn is lower than 0", () => {
+    const coTest = new CarInsurance([ new Product("Low Coverage", -1, 10)]);
+    const products = coTest.updatePrice();
+    expect(products[0].sellIn).equal(-2);
+    expect(products[0].price).equal(8);
+  })
 });
 
 describe("Full Coverage", () => {
@@ -84,19 +110,3 @@ describe("Super Sale", () => {
     expect(products[0].price).equal(21);
   })
 })
-
-describe("Other Products", () => {
-  it("should decrease price by one when sellIn is greater than 0", () => {
-    const coTest = new CarInsurance([ new Product("Medium Coverage", 5, 10)]);
-    const products = coTest.updatePrice();
-    expect(products[0].sellIn).equal(4);
-    expect(products[0].price).equal(9);
-  })
-
-  it("should decrease price by two when sellIn is lower than 0", () => {
-    const coTest = new CarInsurance([ new Product("Low Coverage", -1, 10)]);
-    const products = coTest.updatePrice();
-    expect(products[0].sellIn).equal(-2);
-    expect(products[0].price).equal(8);
-  })
-});

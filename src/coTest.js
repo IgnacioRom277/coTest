@@ -11,69 +11,68 @@ class CarInsurance {
     this.products = products;
   }  
   updatePrice() {
-    for (var i = 0; i < this.products.length; i++) {
-      let currentPrice = this.products[i].price;
-      let currentSellIn =  this.products[i].sellIn;
+    if (this.products.length > 0) {
+      for (const product of this.products) {
+        switch(product.name) {
+          case 'Full Coverage': {
+            if (product.price < 50) {
+              product.price = product.price + 1;
+              if (product.sellIn < 0 && product.price < 50) {
+                product.price =   product.price + 1;
+              }
+            }
+            product.sellIn = product.sellIn - 1;
+            break;
+          };
+          case 'Mega Coverage': {
+            product.sellIn = product.sellIn;
+            product.price = product.price;
+            break;
+          };
+          case 'Special Full Coverage': {
+            if (product.price < 50) {
+              product.price =  product.price + 1;
+              if (product.price < 50) {
+                if (product.sellIn < 11) {
+                  product.price =  product.price + 1;
+                }
+                if (product.sellIn < 6) {
+                  product.price =  product.price + 1;
+                }
+              }
+            }
+            if (product.sellIn < 0) {
+              product.price = 0;
+            }
+            product.sellIn = product.sellIn - 1;
+            break;
+          };
+          case 'Super Sale': {
+            if (product.sellIn > 0) {
+              product.price =  product.price - 2;
+            } else {
+              product.price =  product.price - 4;
+            } 
+            product.sellIn = product.sellIn - 1;
+            break;
+          };
+          default: {
+            if (product.sellIn > 0) {
+              product.price =  product.price - 1;
+            } else {
+              product.price =  product.price - 2;
+            }
+            product.sellIn = product.sellIn - 1;
+            break;
+          }
+        }
 
-      switch(this.products[i].name) {
-        case 'Full Coverage': {
-          if (currentPrice < 50) {
-            this.products[i].price =  currentPrice + 1;
-            this.products[i].sellIn = currentSellIn - 1;
-          }
-          break;
-        };
-        case 'Mega Coverage': {
-          this.products[i].sellIn = currentSellIn;
-          this.products[i].price = currentPrice;
-          break;
-        };
-        case 'Special Full Coverage': {
-          if (currentPrice < 50) {
-            this.products[i].price =  currentPrice + 1;
-            if (this.products[i].price < 50) {
-              if (this.products[i].sellIn < 11) {
-                this.products[i].price =  this.products[i].price + 1;
-              }
-              if (this.products[i].sellIn < 6) {
-                this.products[i].price =  this.products[i].price + 1;
-              }
-            }
-          }
-          if (this.products[i].sellIn < 0) {
-            this.products[i].price = 0;
-          }
-          this.products[i].sellIn = currentSellIn - 1;
-          break;
-        };
-        case 'Super Sale': {
-          if (currentPrice > 0) {
-            this.products[i].price =  currentPrice - 2;
-          }
-          if (currentSellIn < 0) {
-            if (currentPrice > 0) {
-              this.products[i].price =  currentPrice - 4;
-            }
-          } 
-          this.products[i].sellIn = currentSellIn - 1;
-          break;
-        };
-        default: {
-          this.products[i].sellIn = currentSellIn - 1;
-          if (currentSellIn > 0) {
-            if (currentPrice > 0) {
-              this.products[i].price =  currentPrice - 1;
-            }
-          } else {
-            if (currentPrice > 0) {
-              this.products[i].price =  currentPrice - 2;
-            }
-          }
-          break;
+        if (product.price < 0) {
+          product.price = 0;
         }
       }
     }
-
+   
     return this.products;
   }
 }
