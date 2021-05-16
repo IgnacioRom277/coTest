@@ -14,7 +14,11 @@
     },
     "rules": {
         "linebreak-style": "off",
-        "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
+        "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+        "no-console": "off",
+        "no-shadow": [2, {"allow": ["coTest"]}],
+        "prefer-arrow-callback": ["error", { "allowNamedFunctions": true }],
+        "prefer-destructuring": ["error", {"object": false, "array": true}]
     },
     "plugins": [
         "mocha"

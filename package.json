@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha spec/*.js",
-    "after-30-days": "node ./src/after-30-days.js"
+    "after-30-days": "node ./src/after-30-days.js",
+    "lint": "eslint ./"
   },
   "repository": {
     "type": "git",

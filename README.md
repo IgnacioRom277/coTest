@@ -34,6 +34,13 @@ To run unit test run the following command:
 npm run test
 ```
 
+## Running Lint
+To run lint use the following command:
+
+```
+npm run lint
+```
+
 ## Trobuleshooting
 If you have some problems to run `npm run test` try to install mocha with the command: 
 
